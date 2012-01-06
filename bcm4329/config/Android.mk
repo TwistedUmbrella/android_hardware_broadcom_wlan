@@ -27,7 +27,14 @@ include $(BUILD_PREBUILT)
 
 #########################
 
-WIFI_DRIVER_SOCKET_IFACE := eth0
+ifeq ($(TARGET_CUSTOM_IFACE),)
+	WIFI_DRIVER_SOCKET_IFACE := \
+		wlan0
+else
+	WIFI_DRIVER_SOCKET_IFACE := \
+		$(TARGET_CUSTOM_IFACE)
+endif
+
 ifeq ($(strip $(WPA_SUPPLICANT_VERSION)),VER_0_6_X)
   include external/wpa_supplicant_6/wpa_supplicant/wpa_supplicant_conf.mk
 else
